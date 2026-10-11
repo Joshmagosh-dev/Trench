@@ -11,13 +11,28 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173. On this managed workspace, if npm's default cache cannot be written, use `npm install --cache /tmp/trench-npm-cache`.
+Open http://localhost:5173/Trench/. On this managed workspace, if npm's default cache cannot be written, use `npm install --cache /tmp/trench-npm-cache`.
 
 ```sh
 npm run build
 npm run preview
 npm test
 ```
+
+## Play online with GitHub Pages
+
+Expected game URL: https://joshmagosh-dev.github.io/Trench/
+
+One-time repository setup:
+
+1. Open **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+2. Ensure GitHub Actions is enabled under **Settings → Actions → General**, and repository/organization policies allow the official `actions/*` actions used by the workflow.
+3. If the `github-pages` environment has branch restrictions, allow `main`. Any configured required reviewers must approve the deployment.
+4. Merge the deployment branch into `main`. Every push to `main` installs locked dependencies with `npm ci`, tests, builds, uploads `dist`, and deploys it. After enabling Pages, you can also run **Deploy Trench to GitHub Pages** manually from the Actions tab on `main`.
+
+The workflow grants `contents: read` and gives only the deployment job `pages: write` and `id-token: write`. No personal access token, paid service, or `gh-pages` branch is required. GitHub Pages availability depends on repository visibility and your GitHub plan.
+
+`vite.config.ts` sets the project base to `/Trench/`, so generated JavaScript and CSS load beneath that path. Terrain and game graphics are drawn in Canvas with no external game asset files. For future public assets, prefix runtime paths with `import.meta.env.BASE_URL`, or import assets through Vite. To verify locally, run `npm run build` and `npm run preview`, then open http://localhost:4173/Trench/.
 
 ## Play
 
